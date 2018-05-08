@@ -85,6 +85,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
     }
 
     private RectF mBarShadowRectBuffer = new RectF();
+    private RectF mBarRectBuffer = new RectF();
 
     protected void drawDataSet(Canvas c, IBarDataSet dataSet, int index) {
 
@@ -130,7 +131,18 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                 mBarShadowRectBuffer.top = mViewPortHandler.contentTop();
                 mBarShadowRectBuffer.bottom = mViewPortHandler.contentBottom();
 
-                c.drawRect(mBarShadowRectBuffer, mShadowPaint);
+                switch (dataSet.getBarShadowShape()){
+                    case ROUND:{
+                        float radius = (mBarShadowRectBuffer.right - mBarShadowRectBuffer.left) / 2;
+                        c.drawRoundRect(mBarShadowRectBuffer, radius, radius, mShadowPaint);
+                        break;
+                    }
+                    case SQUARE:{
+                        c.drawRect(mBarShadowRectBuffer, mShadowPaint);
+                        break;
+                    }
+                }
+
             }
         }
 
@@ -190,9 +202,22 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                         android.graphics.Shader.TileMode.MIRROR));
             }
 
+            mBarRectBuffer.left = buffer.buffer[j];
+            mBarRectBuffer.top = buffer.buffer[j + 1];
+            mBarRectBuffer.right = buffer.buffer[j + 2];
+            mBarRectBuffer.bottom = buffer.buffer[j + 3];
+            switch (dataSet.getBarShadowShape()){
+                case ROUND:{
+                    float radius = (mBarRectBuffer.right - mBarRectBuffer.left) / 2;
+                    c.drawRoundRect(mBarRectBuffer, radius, radius, mRenderPaint);
+                    break;
+                }
+                case SQUARE:{
+                    c.drawRect(mBarRectBuffer, mRenderPaint);
+                    break;
+                }
+            }
 
-            c.drawRect(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],
-                    buffer.buffer[j + 3], mRenderPaint);
 
             if (drawBorder) {
                 c.drawRect(buffer.buffer[j], buffer.buffer[j + 1], buffer.buffer[j + 2],

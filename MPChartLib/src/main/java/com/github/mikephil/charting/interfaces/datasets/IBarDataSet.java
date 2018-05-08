@@ -61,4 +61,24 @@ public interface IBarDataSet extends IBarLineScatterCandleBubbleDataSet<BarEntry
      * @return
      */
     String[] getStackLabels();
+
+    /**
+     * Returns the shape used for drawing the bar-shadows shape. The bar shadows is a
+     * surface behind the bar that indicates the maximum value.
+     *
+     * @return shadow's shape
+     */
+    Shape getBarShadowShape();
+
+    /**
+     * Returns the shape used for drawing the bar shape.
+     *
+     * @return bar's shape
+     */
+    Shape getBarShape();
+
+    enum Shape{
+        ROUND,
+        SQUARE
+    }
 }

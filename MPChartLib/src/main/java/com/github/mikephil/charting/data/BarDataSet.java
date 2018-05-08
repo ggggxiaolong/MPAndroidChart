@@ -42,6 +42,16 @@ public class BarDataSet extends BarLineScatterCandleBubbleDataSet<BarEntry> impl
             "Stack"
     };
 
+    /**
+     * the bar shadow's draw shape
+     */
+    private Shape mShadowShape = Shape.SQUARE;
+
+    /**
+     * the bar's draw shape
+     */
+    private Shape mBarShape = Shape.SQUARE;
+
     public BarDataSet(List<BarEntry> yVals, String label) {
         super(yVals, label);
 
@@ -235,4 +245,23 @@ public class BarDataSet extends BarLineScatterCandleBubbleDataSet<BarEntry> impl
     public String[] getStackLabels() {
         return mStackLabels;
     }
+
+    @Override
+    public Shape getBarShadowShape() {
+        return mShadowShape;
+    }
+
+    public void setShadowShape(Shape mShadowShape) {
+        this.mShadowShape = mShadowShape;
+    }
+
+    @Override
+    public Shape getBarShape() {
+        return mBarShape;
+    }
+
+    public void setBarShape(Shape mBarShape) {
+        this.mBarShape = mBarShape;
+    }
+
 }
